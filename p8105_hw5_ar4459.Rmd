@@ -175,4 +175,20 @@ sim_results = bind_rows(output)
 sim_results
 ```
 
+```{r}
+# Repeat the above for μ={1,2,3,4,5,6}
+mu = tibble(mu = c(1, 2, 3, 4, 5, 6))
+N = 20
 
+                       
+data_mu = c()
+for (i in 1:N) { #
+  data_mu[[i]] =
+    mu |> 
+    mutate(output = map(mu, t_test_sim)) 
+}
+
+sim_results_mu = 
+  bind_rows(data_mu) |> 
+  unnest(output)
+```
