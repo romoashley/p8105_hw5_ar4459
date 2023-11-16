@@ -145,3 +145,34 @@ plot
 ```
 The spaghetti plot shows that the control group has lower values than the experimental group. The control group appreas to stay between -2.5 and 5 while the experimental group increases over time. The mean value for the control group is `r mean(pull(data_clean |> filter(tx_arm == "con")))` and the mean value for the experimental group is `r mean(pull(data_clean |> filter(tx_arm == "exp")))`. The minimum value for the control group is `r min(pull(data_clean |> filter(tx_arm == "con")))` and the miniumum value for the treatment group is `r min(pull(data_clean |> filter(tx_arm == "exp")))`. The maximum value for the control group is `r max(pull(data_clean |> filter(tx_arm == "con")))` and the maximum value for the experimental group is `r max(pull(data_clean |> filter(tx_arm == "exp")))`.
 
+## Problem 3
+
+```{r}
+# generate data
+t_test_sim = function(mu = 0) {
+  
+  data = 
+    tibble(
+      x = rnorm(n = 30, mean = mu, sd = 5)
+    )
+  
+  t_test = 
+    t.test(data, mean = 0, conf.level = 0.95) |> 
+    broom::tidy()
+}
+```
+
+```{r}
+# Generate 5000 datasets from the model
+
+output = vector("list", 5000)
+
+for (i in 5000) {
+  output[[i]] = t_test_sim(30)
+}
+
+sim_results = bind_rows(output)
+sim_results
+```
+
+
