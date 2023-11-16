@@ -143,6 +143,7 @@ plot =
 
 plot
 ```
+
 The spaghetti plot shows that the control group has lower values than the experimental group. The control group appreas to stay between -2.5 and 5 while the experimental group increases over time. The mean value for the control group is `r mean(pull(data_clean |> filter(tx_arm == "con")))` and the mean value for the experimental group is `r mean(pull(data_clean |> filter(tx_arm == "exp")))`. The minimum value for the control group is `r min(pull(data_clean |> filter(tx_arm == "con")))` and the miniumum value for the treatment group is `r min(pull(data_clean |> filter(tx_arm == "exp")))`. The maximum value for the control group is `r max(pull(data_clean |> filter(tx_arm == "con")))` and the maximum value for the experimental group is `r max(pull(data_clean |> filter(tx_arm == "exp")))`.
 
 ## Problem 3
@@ -178,7 +179,7 @@ sim_results
 ```{r}
 # Repeat the above for μ={1,2,3,4,5,6}
 mu = tibble(mu = c(1, 2, 3, 4, 5, 6))
-N = 20
+N = 5000
 
                        
 data_mu = c()
@@ -269,12 +270,11 @@ avg_mu__power_reject_plot =
   labs(
     x = "True Value of Mu",
     y = "Average Estimate of Mu",
-    title = "True Value vs Average Estimate of Mu 
-    (When Null Is Rejected)"
+    title = "True Value vs Average Estimate of Mu (When Null Is Rejected)"
   )
 
 avg_mu__power_reject_plot
 ```
-According to the plot, the sample average of μ̂ across tests for which the null is rejected is approximately equal to the true value of μ. For example, when the true value of mu is 2, the average mu is 2.42. When the true value of 3, the average mu is 3.27. When the true value of mu is 4, the average mu is 4.23. When the true value of mu is 5, the average mu is 4.87. When the true mu is 6, the average mu is 6.42. The only exception is when mu is 1, the average mu is 2.18.
+According to the plot, the sample average of μ̂ across tests for which the null is rejected is approximately equal to the true value of μ for all except when mu is 1.
 
 
