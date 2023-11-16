@@ -222,4 +222,29 @@ power_mu_plot
 The plot shows that as the value of mu (effect size) increases, the power also increases. There is a positive association between power and mu.
 
 
+```{r}
+# Make a plot showing the average estimate of μ̂ on the y axis and the true value of μ on the x axis.
+avg_mu = 
+  sim_results_mu |> 
+  group_by(mu) |> 
+  summarize(
+    mean_mu_estimate = mean(estimate)
+  )
+
+avg_mu_plot = 
+  avg_mu |> 
+  ggplot(aes(x = mu, y = mean_mu_estimate)) +
+  geom_point() + 
+  geom_line() +
+  labs(
+    x = "True Value of Mu",
+    y = "Average Estimate of Mu",
+    title = "True Value vs Average Estimate of Mu"
+  )
+
+avg_mu_plot
+```
+Based on the plot, the value of the average mu estimate closely approximates the true value of mu.
+
+
 
