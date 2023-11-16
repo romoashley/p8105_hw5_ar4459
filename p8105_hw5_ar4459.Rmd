@@ -192,3 +192,34 @@ sim_results_mu =
   bind_rows(data_mu) |> 
   unnest(output)
 ```
+
+```{r}
+# Make a plot showing the proportion of times the null was rejected (the power of the test) on the y axis and the true value of μ on the x axis. Describe the association between effect size and power.
+sim_results_mu_power =
+  sim_results_mu |> 
+  mutate(
+    reject = p.value < 0.05
+  ) |> 
+  group_by(mu) |> 
+  summarize(
+    power = sum(reject)/N
+  )
+
+
+power_mu_plot =
+  sim_results_mu_power |> 
+  ggplot(aes(x = power, y = mu)) +
+  geom_point() +
+  geom_line() +
+  labs(
+    x = "Power",
+    y = "Value of Mu",
+    title = "Power vs. Mu"
+  )
+
+power_mu_plot
+```
+The plot shows that as the value of mu (effect size) increases, the power also increases. There is a positive association between power and mu.
+
+
+
